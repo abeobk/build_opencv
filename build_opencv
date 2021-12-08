@@ -14,8 +14,8 @@ BUILD_DIR="./build"
 INSTALL_DIR="/usr/local"
 
 #create build & install
-rm -rf $BUILD_DIR 
-mkdir $BUILD_DIR 
+#rm -rf $BUILD_DIR 
+#mkdir $BUILD_DIR 
 cd $BUILD_DIR
 
 cmake .. \
@@ -42,7 +42,7 @@ cmake .. \
 -DWITH_AVFOUNDATION=OFF \
 -DWITH_1394=OFF \
 -DWITH_ANDROID_MEDIANDK=OFF \
--DWITH_GTK=OFF \
+-DWITH_GTK=ON \
 -DWITH_WIN32UI=OFF \
 -DWITH_PROTOBUF=ON \
 -DBUILD_PROTOBUF=ON \
@@ -51,7 +51,7 @@ cmake .. \
 -DBUILD_TESTS=OFF \
 -DBUILD_PYTHON=OFF \
 -DBUILD_opencv_apps=OFF \
--DBUILD_LIST=core,videoio,imgproc,imgcodecs,calib3d,ml,video,dnn \
+-DBUILD_LIST=core,videoio,imgproc,imgcodecs,calib3d,ml,video,dnn,highgui \
 -DBUILD_JAVA=OFF \
 -DBUILD_FAT_JAVA_LIB=OFF \
 -DBUILD_opencv_python2=OFF \
