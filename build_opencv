@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#Cloing opencv if not
+if [[ ! -d "opencv" ]]; then
+	git clone https://github.com/opencv/opencv.git
+fi
+
+cd opencv
+
+CPU_CNT=`grep -c ^processor /proc/cpuinfo`
+echo "CPU(s): $CPU_CNT"
+
+BUILD_DIR="./build"
+INSTALL_DIR="/usr/local"
+
+#create build & install
+rm -rf $BUILD_DIR 
+mkdir $BUILD_DIR 
+cd $BUILD_DIR
+
+cmake .. \
+-DCMAKE_BUILD_TYPE=RELEASE \
+-DCMAKE_INSTALL_PREFIX=$INSTALL_DIR \
+-DCMAKE_TOOLCHAIN_FILE=../platforms/linux/gnu.toolchain.cmake \
+-DCMAKE_CXX_COMPILER=g++ \
+-DCMAKE_C_COMPILER=gcc \
+-DINSTALL_C_EXAMPLES=OFF \
+-DINSTALL_PYTHON_EXAMPLES=OFF \
+-DWITH_PTHREADS_PF=ON \
+-DWITH_V4L=ON \
+-DWITH_QT=OFF \
+-DWITH_OPENGL=ON \
+-DWITH_TIFF=OFF \
+-DWITH_WEBP=OFF \
+-DWITH_TBB=ON \
+-DBUILD_TBB=ON \
+-DWITH_OPENEXR=OFF \
+-DWITH_JASPER=OFF \
+-DWITH_GSTREAMER=OFF \
+-DWITH_MSMF=OFF \
+-DWITH_DSHOW=OFF \
+-DWITH_AVFOUNDATION=OFF \
+-DWITH_1394=OFF \
+-DWITH_ANDROID_MEDIANDK=OFF \
+-DWITH_GTK=OFF \
+-DWITH_WIN32UI=OFF \
+-DWITH_PROTOBUF=ON \
+-DBUILD_PROTOBUF=ON \
+-DWITH_DNN_OPENCL=ON \
+-DBUILD_EXAMPLES=OFF \
+-DBUILD_TESTS=OFF \
+-DBUILD_PYTHON=OFF \
+-DBUILD_opencv_apps=OFF \
+-DBUILD_LIST=core,videoio,imgproc,imgcodecs,calib3d,ml,video,dnn \
+-DBUILD_JAVA=OFF \
+-DBUILD_FAT_JAVA_LIB=OFF \
+-DBUILD_opencv_python2=OFF \
+-DBUILD_opencv_python3=OFF
+
+echo "Press <ENTER> to continue..."
+read
+
+make -j$CPU_CNT
+
+sudo make install
